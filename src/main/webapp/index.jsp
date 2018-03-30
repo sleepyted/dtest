@@ -1,5 +1,8 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<h2>redirecting...</h2>
+<script>
+	window.location = "/home"
+</script>
 </body>
 </html>

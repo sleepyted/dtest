@@ -1,6 +1,7 @@
 package servlet;
 
 import commom.JDBCUtil;
+import commom.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class HomeServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			Log.i("Home", "hello world");
 			Connection conn = JDBCUtil.getConnection();
 			String sql = "SELECT * FROM online_voting.t_user";
 			PreparedStatement stmt = conn.prepareStatement(sql);

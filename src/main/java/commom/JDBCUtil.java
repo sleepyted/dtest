@@ -67,27 +67,32 @@ public class JDBCUtil {
 	/**
 	 * 关闭连接
 	 *
-	 * @param conn
 	 * @param st
 	 * @throws SQLException
 	 */
-	public static void closeResource(Connection conn, PreparedStatement st) throws SQLException {
-		st.close();
-		conn.close();
+	public static void closeResource(PreparedStatement st) {
+		try {
+			st.close();
+			conn.close();
+		} catch (SQLException e) {
+			Log.i("JDBCUtil", "error closeResource");
+		}
 	}
 
 	/**
 	 * 关闭连接
 	 *
-	 * @param conn
 	 * @param rs
 	 * @param st
 	 * @throws SQLException
 	 */
-	public static void closeResource(Connection conn, ResultSet rs, PreparedStatement st) throws SQLException {
-		st.close();
-		rs.close();
-		conn.close();
+	public static void closeResource(ResultSet rs, PreparedStatement st) {
+		try {
+			rs.close();
+			st.close();
+		} catch (Exception e) {
+			Log.i("JDBCUtil", e.toString());
+		}
 	}
 
 }

@@ -9,6 +9,7 @@
 <html>
 <head>
 	<title>驾考网 ${title}</title>
+	<meta charset="UTF-8"/>
 	<link rel="stylesheet" href="<%= request.getContextPath() + "/static/css/bootstrap.css"%>">
 	<script src="<%= request.getContextPath() + "/static/js/jquery.js"%>"></script>
 	<script src="<%= request.getContextPath() + "/static/js/bootstrap.js"%>"></script>

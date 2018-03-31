@@ -1,61 +1,80 @@
-<%--
-  Created by IntelliJ IDEA.
-  Date: 2018/3/25
-  Time: 16:11
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-	<title>注册</title>
-	<link rel="stylesheet" href="<%= request.getContextPath() + "/static/css/bootstrap.css"%>">
-	<script src="<%= request.getContextPath() + "/static/js/jquery.js"%>"></script>
-	<script src="<%= request.getContextPath() + "/static/js/bootstrap.js"%>"></script>
-</head>
-<body>
-<nav class="navbar navbar-default col-md-8 col-md-offset-2">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">驾考网</a>
-		</div>
-	</div><!-- /.navbar-collapse -->
-	</div><!-- /.container-fluid -->
-
-</nav>
-	<div class="container col-md-6 col-md-offset-3" style="height: 100%;">
-		<br>
-		<br>
-		<br>
-		<br>
+<jsp:include page="../header.jsp"/>
 		<form>
 			<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				<label for="Email">邮箱地址</label>
+				<input type="email" class="form-control" id="Email" placeholder="Email">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				<label for="Tel">手机号码</label>
+				<input type="number" class="form-control" id="Tel" placeholder="Tel" required max="13">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputPassword1">Password Confirm</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				<label for="Username">用户名</label>
+				<input type="text" class="form-control" id="Username" placeholder="Username" required maxlength="12">
 			</div>
-			<button type="submit" class="btn btn-default">注册</button>
+			<div class="form-group">
+				<label for="Gender">性别</label>
+				<input type="number" class="form-control" id="Gender" placeholder="Gender" required maxlength="1">
+			</div>
+			<div class="form-group">
+				<label for="Pwd">密码</label>
+				<input type="password" class="form-control" id="Pwd" placeholder="Password" required maxlength="12">
+			</div>
+			<div class="form-group">
+				<label for="Pwd2">确认密码</label>
+				<input type="password" class="form-control" id="Pwd2" placeholder="Password" required maxlength="12">
+			</div>
+			<button type="submit" id="regiserBtn" class="btn btn-default">注册</button>
 			<button type="submit" class="btn btn-default">返回登录</button>
 		</form>
 	</div>
-
-
 <script>
-	console.log($)
+	$(function(){
+		var registerBtn = $("#regiserBtn");
+		registerBtn.on("click",function(e){
+			e.preventDefault();
+			var pwd1 = $("#Pwd").val();
+			var pwd2 = $("#Pwd2").val();
+			if(pwd1 !== pwd2) {
+				alert("两次密码输入不同！请重试");
+				window.location.reload();
+			}else {
+				var username = $("#Username").val();
+				var password = $("#Pwd").val();
+				var email = $("#Email").val();
+				var gender = $("#Gender").val();
+				var tel = $("#Tel").val();
+
+				$.ajax({
+					async:false,
+					url:"/user?action=register",
+					type:'post',
+					data:{
+							username : username,
+							password: password,
+							email : email,
+							gender : gender,
+							tel : tel
+					},
+					success:function(data){
+						console.log(data)
+						var result = JSON.parse(data)
+						console.log(result)
+							if (result.status == 1){
+								alert(result.msg);
+								window.location.href = "<%=request.getContextPath()%>/user?page=login"
+							}
+						alert(result.msg);
+					},
+					error:function(){
+					}
+				})
+
+			}
+
+		})
+	})
 </script>
-</body>
-</html>
+<jsp:include page="../footer.jsp"/>

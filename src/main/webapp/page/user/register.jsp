@@ -8,15 +8,18 @@
 			</div>
 			<div class="form-group">
 				<label for="Tel">手机号码</label>
-				<input type="number" class="form-control" id="Tel" placeholder="Tel" required max="13">
+				<input type="number" class="form-control" id="Tel" placeholder="Tel" required  oninput="if(value.length>13)value=value.slice(0,13)">
 			</div>
 			<div class="form-group">
 				<label for="Username">用户名</label>
 				<input type="text" class="form-control" id="Username" placeholder="Username" required maxlength="12">
 			</div>
 			<div class="form-group">
-				<label for="Gender">性别</label>
-				<input type="number" class="form-control" id="Gender" placeholder="Gender" required maxlength="1">
+				<label>性别</label>
+					<select class="custom-select" id="Gender">
+						<option value="1" selected>男</option>
+						<option value="0">女</option>
+					</select>
 			</div>
 			<div class="form-group">
 				<label for="Pwd">密码</label>
@@ -24,10 +27,10 @@
 			</div>
 			<div class="form-group">
 				<label for="Pwd2">确认密码</label>
-				<input type="password" class="form-control" id="Pwd2" placeholder="Password" required maxlength="12">
+				<input type="password" class="form-control" id="Pwd2" placeholder="Confirm Password" required maxlength="12">
 			</div>
-			<button type="submit" id="regiserBtn" class="btn btn-default">注册</button>
-			<button type="submit" class="btn btn-default">返回登录</button>
+			<button type="submit" id="regiserBtn" class="btn btn-primary">注册</button>
+			<a href="<%=request.getContextPath() %>/user?page=login" class="btn btn-default">返回登录</a>
 		</form>
 	</div>
 <script>
@@ -47,31 +50,42 @@
 				var gender = $("#Gender").val();
 				var tel = $("#Tel").val();
 
-				$.ajax({
-					async:false,
-					url:"/user?action=register",
-					type:'post',
-					data:{
-							username : username,
-							password: password,
-							email : email,
-							gender : gender,
-							tel : tel
-					},
-					success:function(data){
-						console.log(data)
-						var result = JSON.parse(data)
-						console.log(result)
-							if (result.status == 1){
+				if (email.indexOf("@")<=0) {
+					$("#Email").focus()
+					return
+				} else {
+
+					var  userInfo ={
+						username: username,
+						password: password,
+						email: email,
+						gender: gender,
+						tel: tel
+					}
+					console.log(userInfo)
+
+					$.ajax({
+						async: false,
+						url: "/user?action=register",
+						type: 'post',
+						data: {
+							userInfo: JSON.stringify(userInfo)
+						},
+						success: function (data) {
+							console.log(data)
+							var result = JSON.parse(data)
+							console.log(result)
+							if (result.status == 1) {
 								alert(result.msg);
 								window.location.href = "<%=request.getContextPath()%>/user?page=login"
 							}
-						alert(result.msg);
-					},
-					error:function(){
-					}
-				})
+							alert(result.msg);
+						},
+						error: function () {
+						}
+					})
 
+				}
 			}
 
 		})

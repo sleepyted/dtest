@@ -2,27 +2,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp"/>
 
-		<form>
-			<div class="form-group">
-				<label for="Email">邮箱</label>
-				<input type="email" class="form-control" id="Email" name="email" placeholder="Email">
-			</div>
-			<div class="form-group">
-				<label for="Password">密码</label>
-				<input type="password" class="form-control" id="Password" name="password" placeholder="Password">
-			</div>
-			<%--<div class="checkbox">--%>
-				<%--<label>--%>
-					<%--<input type="checkbox">记住我--%>
-				<%--</label>--%>
-			<%--</div>--%>
+<form>
+	<div class="form-group">
+		<label for="Email">邮箱</label>
+		<input type="email" class="form-control" id="Email" name="email" placeholder="Email">
+	</div>
+	<div class="form-group">
+		<label for="Password">密码</label>
+		<input type="password" class="form-control" id="Password" name="password" placeholder="Password">
+	</div>
+	<%--<div class="checkbox">--%>
+	<%--<label>--%>
+	<%--<input type="checkbox">记住我--%>
+	<%--</label>--%>
+	<%--</div>--%>
 
-			<hr>
-			<button type="submit" id="LoginBtn"  class="btn btn-primary">登录</button>
-			<a href="<%=request.getContextPath()%>/user?page=register"  class="btn btn-default">注册</a>
-			<hr>
-			<a href="<%=request.getContextPath()%>/admin?page=login">管理员登录</a>
-		</form>
+	<hr>
+	<button type="submit" id="LoginBtn"  class="btn btn-primary">登录</button>
+	<hr>
+</form>
 
 <script>
 	$(function(){
@@ -42,7 +40,7 @@
 				$.ajax({
 					async: false,
 					type:"post",
-					url:"/user?action=login",
+					url:"/admin?action=login",
 					data:{
 						email:email.val(),
 						password: password.val()
@@ -56,7 +54,7 @@
 								window.location.reload()
 							}else if(data.status == 1){
 								alert("登录成功")
-								window.location.href = "/home"
+								window.location.href = data.msg
 							}
 						}
 					}

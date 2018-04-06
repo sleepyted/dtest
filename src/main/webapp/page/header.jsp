@@ -28,7 +28,7 @@
 			</button>
 			<a class="navbar-brand" href="<%=request.getContextPath()%>/home">驾考网</a>
 		</div>
-
+		<c:if test="${user!=null}">
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
@@ -38,18 +38,19 @@
 					<ul class="dropdown-menu">
 						<li><a href="<%=request.getContextPath()%>/practice?page=random">随机练习</a></li>
 						<li><a href="<%=request.getContextPath()%>/practice?page=label">分类练习</a></li>
-						<%--<li role="separator" class="divider"></li>--%>
-						<%--<li><a href="#">Separated link</a></li>--%>
-						<%--<li role="separator" class="divider"></li>--%>
-						<%--<li><a href="#">One more separated link</a></li>--%>
+							<%--<li role="separator" class="divider"></li>--%>
+							<%--<li><a href="#">Separated link</a></li>--%>
+							<%--<li role="separator" class="divider"></li>--%>
+							<%--<li><a href="#">One more separated link</a></li>--%>
 					</ul>
 				</li>
-				<li><a href="<%=request.getContextPath()%>/test?exam=exam">模拟考试 <span class="sr-only">(current)</span></a></li>
-				<%--<li><a href="#">Link</a></li>--%>
+				<li><a href="<%=request.getContextPath()%>/test?exam=exam">模拟考试 <span
+						class="sr-only">(current)</span></a></li>
+					<%--<li><a href="#">Link</a></li>--%>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<%--<li><a href="#">Link</a></li>--%>
+					<%--<li><a href="#">Link</a></li>--%>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					   aria-expanded="false">我的 <span class="caret"></span></a>
@@ -63,6 +64,29 @@
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
+	</c:if>
+	<c:if test="${user == null && admin == null}">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+					<%--<li><a href="#">Link</a></li>--%>
+				<li>
+					<a href="<%=request.getContextPath()%>/user?page=login">登录</a>
+				</li>
+				<li><a href="<%=request.getContextPath()%>/user?page=register">注册</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</c:if>
+	<c:if test="${admin != null}">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+					<%--<li><a href="#">Link</a></li>--%>
+				<li><a href="<%=request.getContextPath()%>/user?page=exit">退出</a>
+				</li>
+			</ul>
+		</div>
+	</c:if>
 </nav>
 
 <div class="container col-xs-8 col-xs-offset-2" style="padding-top: 5%">
